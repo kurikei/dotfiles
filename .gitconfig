@@ -1,0 +1,47 @@
+[alias] # 1 letter
+  b = branch
+  d = diff
+  f = fetch
+  l = log
+  s = status
+[alias] # 2 letter
+  br = branch
+  ci = commit
+  co = checkout
+  st = status
+[alias] # functional
+  checkout-pullrequest = !sh -c 'git fetch origin pull/$1/head:pr/$1 && git checkout pr/$1' -
+  co-pr  = !git checkout-pullrequest
+  current-branch = rev-parse --abbrev-ref HEAD
+  drop-latest-stash = "stash drop stash@{0}"
+  open-pr = "!f() { hash=`git log -n 1 --pretty='%H' $1`; hub browse -- `git log --merges --oneline --reverse --ancestry-path ${hash}...master | grep 'Merge pull request #' | head -n 1 | cut -f5 -d' ' | sed -e 's%#%pull/%'`; }; f"
+  set-public-user = "!f() { git config --local user.name kurikei; git config --local user.email kurikei@gmail.com; }; f"
+  show-latest-stash = "show stash@{0}"
+[color]
+  branch      = auto
+  diff        = auto
+  interactive = auto
+  status      = auto
+  ui = auto
+[commit]
+  verbose = true # 2.9.0 or later
+[core]
+  editor = vim
+[credential]
+  helper = !aws codecommit credential-helper $@
+  UseHttpPath = true
+[fetch]
+  prune = true
+[merge]
+  ff = no
+  commit = no
+[pull]
+  ff = yes
+[push]
+  default = simple
+[user]
+  useConfigOnly = true
+[diff]
+  indentHeuristic = true # 2.11 or later
+[rebase]
+  autostash = true # 2.7 or later
